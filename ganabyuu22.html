@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Album</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+        .upload-form {
+            margin: 20px 0;
+        }
+        .album {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .album img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Upload and View Images</h2>
+        <div class="upload-form">
+            <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*">
+                <input type="submit" value="Upload">
+            </form>
+        </div>
+        <div class="album" id="album"></div>
+    </div>
+    <script>
+        async function loadImages() {
+            const response = await fetch('/images');
+            const images = await response.json();
+            const album = document.getElementById('album');
+            album.innerHTML = '';
+            images.forEach(image => {
+                const img = document.createElement('img');
+                img.src = image.url;
+                album.appendChild(img);
+            });
+        }
+
+        document.getElementById('uploadForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+            loadImages();
+        });
+
+        window.onload = loadImages;
+    </script>
