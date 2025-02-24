@@ -2,7 +2,7 @@ import os
 import subprocess
 
 # Stable Diffusionの実行ファイルへのパス
-stable_diffusion_path = r'C:\path\to\your\stable_diffusion\stable_diffusion.exe'
+stable_diffusion_path = C:\Users\ren0765\Downloads\生成AI練習/otamesi
 
 # ショートカットを作成するためのパス
 shortcut_path = r'C:\path\to\your\shortcut.lnk'
